@@ -1,1 +1,27 @@
-{"template":{"name":"javascript","filesAndDirs":{"smart-contracts":{"path-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts","contracts-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\contracts","artifacts-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\artifacts","deploy-localhost":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\scripts\\deploy_localhost.js","deploy-prod":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\scripts\\deploy_prod.js","typechain-types-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting","hardhat-config":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\hardhat.config.js","hardhat-config-ethernal":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\smart-contracts\\hardhat-ethernal.config.js"},"frontend":{"path-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend","smart-contracts-config-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\constants","deployed-network-development":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\constants\\deployed-network-development.json","deployed-network-production":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\constants\\deployed-network-production.json","smart-contracts-development":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\constants\\smart-contracts-development.json","smart-contracts-production":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\constants\\smart-contracts-production.json","types-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting\\frontend\\src\\types","typechain-types-dir":"C:\\Users\\avnia\\Downloads\\hackathon\\voting"}}}}
+{
+  "template": {
+    "name": "javascript",
+    "filesAndDirs": {
+      "smart-contracts": {
+        "path-dir": "smart-contracts",
+        "contracts-dir": "smart-contracts/contracts",
+        "artifacts-dir": "smart-contracts/artifacts",
+        "deploy-localhost": "smart-contracts/scripts/deploy_localhost.js",
+        "deploy-prod": "smart-contracts/scripts/deploy_prod.js",
+        "typechain-types-dir": "",
+        "hardhat-config": "smart-contracts/hardhat.config.js",
+        "hardhat-config-ethernal": "smart-contracts/hardhat-ethernal.config.js"
+      },
+      "frontend": {
+        "path-dir": "frontend",
+        "smart-contracts-config-dir": "frontend/src/constants",
+        "deployed-network-development": "frontend/src/constants/deployed-network-development.json",
+        "deployed-network-production": "frontend/src/constants/deployed-network-production.json",
+        "smart-contracts-development": "frontend/src/constants/smart-contracts-development.json",
+        "smart-contracts-production": "frontend/src/constants/smart-contracts-production.json",
+        "types-dir": "frontend/src/types",
+        "typechain-types-dir": ""
+      }
+    }
+  }
+}
