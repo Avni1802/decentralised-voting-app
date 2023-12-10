@@ -1,66 +1,50 @@
-### Modify the following files after `forge build`
- - lib/protocol-contracts/contracts/evm/interfaces/ZetaInteractorErrors.sol
- - lib/protocol-contracts/contracts/evm/interfaces/ZetaInterfaces.sol
- - lib/protocol-contracts/contracts/evm/tools/ZetaInteractor.sol
-## **Other Repos**
 
-Frontend  : https://github.com/technophile-04/DAOminichain
 
-Simple Server ( chainlink functions ) : https://github.com/technophile-04/chainlink-func-server
-
-# **Omnichain governor standard**
+# **Anon Vote**
 
 ## TL;DR:
->Discover an advanced smart contract standard enabling seamless omnichain governance integration into DAOs. Experience heightened scalability and cross-chain collaboration within decentralized ecosystems. Embrace this cutting-edge standard to elevate decentralized governance to new heights.
+In a breakthrough for secure and accessible digital voting, our project introduces a pioneering Ethereum-based voting system integrated with India's Aadhaar card for robust identity verification. This system leverages cutting-edge zk-proof technology to ensure the authenticity of voter identity while maintaining privacy and security.
+
+Upon successful Aadhaar verification, users are seamlessly directed to a list of ballots, reflecting our commitment to a user-friendly experience. Each ballot incorporates unique criteria for eligibility, such as age or university credentials, verified via the innovative Polygon ID tool. This multifaceted approach to verification ensures that only eligible voters participate, bolstering the integrity of the voting process.
 
 ## How's made
 
-Composed of 5 core smart contracts :
+Composed of 3 core smart contracts :
 
-1. [MultichainGovernor.sol](src/core/MultichainGovernor.sol)
+1. [AnonAadhaarVerifier.sol](smart-contracts/contracts/AnonAadhaarVerifier.sol)
 
-    This contract is inherited and deployed on the settlement chain (i.e. Polygon)
+    Anon Aadhar Contract is the Aadhar Verifier and the main contract that handles the proving of the Aadhar using Zero Knowledge , deployed on polygon zkEVM, arbitrum, scroll, celo, FVM, XDC, okx, Base
 
-2. [MultichainGovernorAdapter.sol](src/core/MultichainGovernorAdapter.sol)
 
-    This contract is deployed on side chains (i.e. BSC)
-3. [MultichainGovernorFunctionsConsumer](src/core/MultichainGovernorFunctionsConsumer.sol)
+2. [Verifier.sol](smart-contracts/contracts/Verifier.sol)
+Circuit written in snarkJS deployed on polygon zkEVM, arbitrum, scroll, celo, FVM, XDC, okx, Base
 
-    This contract is deployed on settlement chain (i.e. Polygon)
-4. [MultichainGovernorVotes](src/core/MultichainGovernorVotes.sol)
+3. [Voting and Ballot Contract](src/core/MultichainGovernorVotesAdapter.sol)
 
-    This contract is deployed on settlement chain (i.e. Polygon)
+    This contracts helps in voting and creating ballot so that it can leverage several users to use us as a platform
 
-5. [MultichainGovernorVotesAdapter](src/core/MultichainGovernorVotesAdapter.sol)
-
-    This contract is deployed on side chains (i.e. BSC)
-
-> IMPORTANT : Contracts and their adapters deployed on side chains will have similar ABIs for seemless integration in the FE.
-
-![alt text](imgs/infra.png)
 
 
 ## Technologies Used
 
-### Zetachain
+### Anon Aadhar
 
-Zetachain offers seamless integration for cross chain messaging, which enables us to implement our new standard. We used it [here](https://github.com/jrcarlos2000/Omnichain-governor-standard/blob/62acfdef1630a337fe382cc937857bc513b1d73f/src/core/MultichainGovernorAdapter.sol#L84)
+Anon Aadhar is used to verify the users that they are indian citizens without revealing any other details such as Aadhar Number or BirthDate or Phone Number etc 
 
-### Chainlink
+### Polygon Dapp Scaffold
 
-Chainlink offers an alternative for integrating cross chain messaging : CCIP which enables us to implement our new standard. We used chainlink functions [here](https://github.com/jrcarlos2000/Omnichain-governor-standard/blob/62acfdef1630a337fe382cc937857bc513b1d73f/src/core/MultichainGovernorFunctionsConsumer.sol#L39)
+We have used Polygon Dapp Scaffold for easy development of the project 
 
-### Worldcoin
+### Polygon ID
 
-IDKit for Identity Verification: IDKit is used for identity verification within FootyDAO (our PoC for omnichain governor standard) . As DAOs often require participants to comply with specific rules and regulations, verifying the identity of participants could be essential for ensuring fair and transparent operations. [here](https://github.com/technophile-04/DAOminichain/blob/b42404e89e12b2c60a65316afaada78ee1496bd3/packages/nextjs/pages/index.tsx#L84)
+Since the zk Proof of the aadhar does not reveal any other details, polygon ID is used to prove that the user is 18+ so that they can vote, not only this but the several other organizations can leverage the platform and issue verifiable credentials to the users in a meaning ful way to conduct voting on our platform 
+### Celo Account Abstraction
 
-### Push
+To seamless have all the users on the platform and since the proof verification and voting is done onchain we have leveraged the Account Abstraction of Celo to sponsor the gas fees of the users
 
-The PUSH protocol in FootyDAO (our PoC for omnichain governor standard) is used for real-time  communication , updates, match notifications etc, the code is [here](https://github.com/technophile-04/DAOminichain/blob/b42404e89e12b2c60a65316afaada78ee1496bd3/packages/nextjs/components/Footer.tsx#L37)
+### IPFS
 
-### Polygon
-
-We used polygon as our settlement layer due to the vast applications and protocols it has.
+Images of the ballott and other images are stored on IPFS and fetched through Saturn Network
 
 ## **Deployed Contracts**
 
@@ -72,28 +56,5 @@ Contract | Goerli | Mumbai
 [MultichainGovernorVotes](src/core/MultichainGovernorVotes.sol) | X | [link](https://mumbai.polygonscan.com/address/0xAb1cE3C12a85B7FA613DE482bfD3a731E7B8C28e)
 [MultichainGovernorVotesAdapter](src/core/MultichainGovernorVotesAdapter.sol) | [here](https://goerli.etherscan.io/address/0x66A70844A816066530eeC13B5C17C82d8df991D7) | X
 
-## **DEMO**
 
-https://youtu.be/j8k2N8XCMbg
-## **PoC Live**
-
-Add Link
-
-## **Pitch Deck**
-
-https://pitch.com/public/33ee1122-099f-413c-9f86-3b41af5230d3
-## **DeployScripts**
-```bash
-// polygonMumbai
-forge script script/Main.s.sol:ScriptPolygon --rpc-url polygonMumbai --etherscan-api-key NDZZQB529Q8HQAUXZEARWCHGZBRGDMSEYC --verifier-url https://api-testnet.polygonscan.com/api --broadcast --verify --legacy
-```
-
-```bash
-// bscTesnet 
-forge script script/Main.s.sol:ScriptBsc --rpc-url bscTestnet --etherscan-api-key IG2WK5KH5CFH1DRYU42MXHHCCCJDWX65RD --verifier-url https://api-testnet.bscscan.com/api --broadcast --verify --legacy
-```
-
-```bash
-// goerli
-forge script script/Main.s.sol:ScriptGoerli --rpc-url goerli --etherscan-api-key Y6H9S7521BGREFMGSETVA72F1HT74FE3M5 --verifier-url https://api-goerli.etherscan.io/api --broadcast --verify --legacy
 ```
