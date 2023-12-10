@@ -48,13 +48,11 @@ Images of the ballott and other images are stored on IPFS and fetched through Sa
 
 ## **Deployed Contracts**
 
-Contract | Goerli | Mumbai
+Contract | zkEVM 
 --- | --- | --- 
-[MultichainGovernor.sol](src/core/MultichainGovernor.sol) | X | [link](https://mumbai.polygonscan.com/address/0xb84BAc17afc8B074dbC83C7920982E41Bf11478B)
-[MultichainGovernorAdapter.sol](src/core/MultichainGovernorAdapter.sol) | [link](https://goerli.etherscan.io/address/0x15a16c761DAc6880cbC25Fdc4fd4e8773C357727) | X
-[MultichainGovernorFunctionsConsumer](src/core/MultichainGovernorFunctionsConsumer.sol) | X | [link](https://mumbai.polygonscan.com/address/0xde6cc3ba502c43f9e5a7606a649d0e268c544bec)
-[MultichainGovernorVotes](src/core/MultichainGovernorVotes.sol) | X | [link](https://mumbai.polygonscan.com/address/0xAb1cE3C12a85B7FA613DE482bfD3a731E7B8C28e)
-[MultichainGovernorVotesAdapter](src/core/MultichainGovernorVotesAdapter.sol) | [here](https://goerli.etherscan.io/address/0x66A70844A816066530eeC13B5C17C82d8df991D7) | X
+[AnonAadharVerifier.sol](smart-contracts/contracts/AnonAadhaarVerifier.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x087c58e13482535c1c107B300f6DBd3f505FA093)
+[Verifier.sol](smart-contracts/contracts/Verifier.sol) | [link](https://testnet-zkevm.polygonscan.com/address/0x77f35B134a85FD1508296c04d53A1c882c63bDCE) | X
+[Vote.sol](smart-contracts/contracts/Vote.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x3ef01CBC562daB2bc50916651517f4DC156f8c7A)
 
 
 ```
