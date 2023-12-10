@@ -72,4 +72,7 @@ https://alfajores.celoscan.io/address/0x7144829418e841cb984f625e0443b0D8121D0f29
 
 Verifier Contract deployed on Arbitrum testnet 
 https://sepolia-explorer.arbitrum.io/tx/0x34a6f868fdab43165c96d496b6ffc81ca8b97bf526f115d9088a2a310238dc14
+
+Verifier Contract deployed on XDC Apothem testnet
+https://explorer.apothem.network/address/xdc014b449ca2644adbf7c01ec84174fd23a9d6e8a5
 ```
