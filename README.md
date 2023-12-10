@@ -48,15 +48,13 @@ Images of the ballott and other images are stored on IPFS and fetched through Sa
 
 ## **Deployed Contracts**
 
-Contract | zkEVM 
+Below Contracts deployed on polygon zkEVM
 
---- | --- | --- 
+[AnonAadharVerifier.sol](smart-contracts/contracts/AnonAadhaarVerifier.sol) (https://testnet-zkevm.polygonscan.com/address/0x087c58e13482535c1c107B300f6DBd3f505FA093)
 
-[AnonAadharVerifier.sol](smart-contracts/contracts/AnonAadhaarVerifier.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x087c58e13482535c1c107B300f6DBd3f505FA093)
+[Verifier.sol](smart-contracts/contracts/Verifier.sol)  [link](https://testnet-zkevm.polygonscan.com/address/0x77f35B134a85FD1508296c04d53A1c882c63bDCE) 
 
-[Verifier.sol](smart-contracts/contracts/Verifier.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x77f35B134a85FD1508296c04d53A1c882c63bDCE) 
-
-[Vote.sol](smart-contracts/contracts/Vote.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x3ef01CBC562daB2bc50916651517f4DC156f8c7A)
+[Vote.sol](smart-contracts/contracts/Vote.sol) [link](https://testnet-zkevm.polygonscan.com/address/0x3ef01CBC562daB2bc50916651517f4DC156f8c7A)
 
 
 ```
