@@ -24,6 +24,15 @@ Circuit written in snarkJS deployed on polygon zkEVM, arbitrum, scroll, celo, FV
     This contracts helps in voting and creating ballot so that it can leverage several users to use us as a platform
 
 
+## Some snapshots from the website
+
+![Screenshot 2023-12-10 084953](https://github.com/Avni1802/decentralised-voting-app/assets/30965883/c460e410-313e-48f2-ba26-076f6d090e5e)
+
+![Screenshot 2023-12-10 085358](https://github.com/Avni1802/decentralised-voting-app/assets/30965883/c2388700-faf7-40bb-9ba3-5a3ef6cff898)
+
+![Screenshot 2023-12-10 084552](https://github.com/Avni1802/decentralised-voting-app/assets/30965883/af127ea6-3e7d-4154-ac94-4424e328e19d)
+
+![Screenshot 2023-12-10 084905](https://github.com/Avni1802/decentralised-voting-app/assets/30965883/e98015d6-f371-4384-bb23-b10870dd4dda)
 
 ## Technologies Used
 
