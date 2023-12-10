@@ -50,6 +50,7 @@ const MyCardComponent = ({
 const ballots = [
   {
     ballotName: "India Voting",
+    ballotImage: "https://static.vecteezy.com/system/resources/previews/000/457/077/original/vector-vote-india-election-background-with-flag.jpg",
     votingType: "abcd",
     startTime: "10/12/2023",
     endTime: "10/12/2023",
@@ -137,7 +138,7 @@ export function Content(props: ContentProps) {
           <MyCardComponent
             key={index}
             onClick={() => router.push("/admin/list-poll/1")}
-            imageSrc="https://via.placeholder.com/150"
+            imageSrc={ballot.ballotImage}
             title={ballot.ballotName}
             description={ballot.candidates
               .map((obj) => obj.partyName)

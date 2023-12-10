@@ -388,7 +388,7 @@ export function ProfileForm() {
       "32ba4b61b6faf511b67dadb108513cc1e4a68bb73a06f505e479344a5fb9f7e3";
     const rpcUrl = "https://explorer.public.zkevm-test.net/";
 
-    const provider = new ethers.JsonRpcProvider(rpcUrl, polygonZkEvmTestnet);
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 
     const wallet = new ethers.Wallet(privateKey, provider);
     const connectedContract = new ethers.Contract(
@@ -483,27 +483,21 @@ export function ProfileForm() {
           name="votingType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>votingType</FormLabel>
+              <FormLabel>Voting Criteria</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified votingType to display" />
+                    <SelectValue placeholder="Select a suitable criteria" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="Custom">Custom</SelectItem>
-                  <SelectItem value="Shareholder">Shareholder</SelectItem>
-                  <SelectItem value="Auction">Auction</SelectItem>
-                  <SelectItem value="Register Voters">
-                    Register Voters
-                  </SelectItem>
-                  <SelectItem value="Insolvency">Insolvency</SelectItem>
+                  <SelectItem value="Custom">Age&gt;=18</SelectItem>
+                  <SelectItem value="Shareholder">Age&gt;21</SelectItem>
+                  <SelectItem value="Auction">collegeID</SelectItem>
+
                 </SelectContent>
               </Select>
-              <FormDescription>
-                You can manage votingType addresses in your{" "}
-                <Link href="/examples/forms">votingType settings</Link>.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -648,7 +642,7 @@ export function ProfileForm() {
             size="sm"
             className="mt-2"
             onClick={() => append({ partyName: "", candidateName: "" })}>
-            Add URL
+            Add Candidates
           </Button>
         </div>
         <Button type="submit">Submit</Button>

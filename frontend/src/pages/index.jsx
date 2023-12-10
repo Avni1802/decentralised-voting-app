@@ -46,7 +46,7 @@ export default function Home() {
       <img className="-z-10 w-full max-h-[1800px] absolute -top-5 bottom-0" src="https://assets-global.website-files.com/637359c81e22b715cec245ad/6464a7ec8c8fd22869e80364_home-hero-new-bg1.svg" loading="eager" alt=""></img>
       <main className="flex flex-col items-center gap-8 rounded-2xl max-w-screen-sm mx-auto h-[24rem] md:h-[20rem] p-8">
 
-        <h1 style={{ fontSize: "50px" }} className="font-bold mb-8 text-gray">Welcome to Anononymous ZK Voting</h1>
+        <h1 style={{ fontSize: "50px" }} className="font-bold mb-8 text-gray">Welcome to Anonymous ZK Voting</h1>
         <p style={{ color: "rgb(150 150 150)" }} className="max-w-sm mb-8">Experience the future of secure and private voting with our cutting-edge app, designed to harness the power of zero-knowledge proofs (ZK) for anonymous voting</p>
 
         <div className="pt-8 mt-8 flex w-full space-x-8">
