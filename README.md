@@ -56,5 +56,20 @@ Below Contracts deployed on polygon zkEVM
 
 [Vote.sol](smart-contracts/contracts/Vote.sol) (https://testnet-zkevm.polygonscan.com/address/0x3ef01CBC562daB2bc50916651517f4DC156f8c7A)
 
+Verifier Contract Deployed on Scroll
 
+https://sepolia.scrollscan.dev/address/0x97238A5dA499eF6A46EdEaE86559eBa876241B3C
+
+Verifier Contract Deployed on Linea
+
+https://goerli.lineascan.build/tx/0x74ac7a8f250f166fcc5e4607fb65cf3f0ee69d2cbcd968738a2a7026c0cf3f9e
+
+Verifier Contract Deployed on Mantle
+https://explorer.testnet.mantle.xyz/tx/0x33e7d37b162ab9bda884c30e24fae8d40f079ae723789fbb60237cb83cfbeb93
+
+Verifier Contract Deployed on Celo
+https://alfajores.celoscan.io/address/0x7144829418e841cb984f625e0443b0D8121D0f29
+
+Verifier Contract deployed on Arbitrum testnet 
+https://sepolia-explorer.arbitrum.io/tx/0x34a6f868fdab43165c96d496b6ffc81ca8b97bf526f115d9088a2a310238dc14
 ```
