@@ -49,7 +49,9 @@ Images of the ballott and other images are stored on IPFS and fetched through Sa
 ## **Deployed Contracts**
 
 Contract | zkEVM 
+
 --- | --- | --- 
+
 [AnonAadharVerifier.sol](smart-contracts/contracts/AnonAadhaarVerifier.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x087c58e13482535c1c107B300f6DBd3f505FA093)
 
 [Verifier.sol](smart-contracts/contracts/Verifier.sol) | X | [link](https://testnet-zkevm.polygonscan.com/address/0x77f35B134a85FD1508296c04d53A1c882c63bDCE) 
