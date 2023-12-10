@@ -19,6 +19,247 @@ import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 
 import React, { useEffect, useState } from 'react';
+import { useAnonAadhaar } from "anon-aadhaar-react";
+import { ethers } from "ethers";
+import { exportCallDataGroth16FromPCD } from "@/lib/utils";
+
+
+const zkvote = [
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "ballotName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "partyName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "candidateName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_partyLogo",
+        "type": "string"
+      }
+    ],
+    "name": "addParty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_ballotName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_ballotImage",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_entryRestriction",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "_candidateName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_partyLogo",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_partyName",
+        "type": "string"
+      }
+    ],
+    "name": "createBallot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_verifierAddr",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_ballotName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_partyName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "_pA",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2][2]",
+        "name": "_pB",
+        "type": "uint256[2][2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "_pC",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[34]",
+        "name": "_pubSignals",
+        "type": "uint256[34]"
+      }
+    ],
+    "name": "voteForParty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "anonAadhaarVerifierAddr",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ballot",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "ballotImage",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "entryRestriction",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "ballots",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "ballotImage",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "entryRestriction",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[2]",
+        "name": "_pA",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[2][2]",
+        "name": "_pB",
+        "type": "uint256[2][2]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "_pC",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint256[34]",
+        "name": "_pubSignals",
+        "type": "uint256[34]"
+      }
+    ],
+    "name": "verify",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
 
 const Popup = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -108,6 +349,7 @@ const FormSchema = z.object({
 
 export default function RadioGroupForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [anonAadhaar] = useAnonAadhaar();
 
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
@@ -116,9 +358,35 @@ export default function RadioGroupForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     openPopup();
+    const contractABI = zkvote;
+    const contractAddress = "0x087c58e13482535c1c107B300f6DBd3f505FA093";
+    const privateKey =
+      "32ba4b61b6faf511b67dadb108513cc1e4a68bb73a06f505e479344a5fb9f7e3";
+    const rpcUrl = "https://rpc.public.zkevm-test.net";
 
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+
+    const wallet = new ethers.Wallet(privateKey, provider);
+    const connectedContract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      wallet
+    );
+    try {
+      const { a, b, c, Input: input } = await exportCallDataGroth16FromPCD(anonAadhaar.pcd);
+      console.log(a, b, c, input)
+      // Replace with your contract method and parameters
+      const result = await connectedContract.voteForParty(
+        "test112",
+        "test112",
+        a, b, c, input
+      );
+      console.log("Contract interaction result:", result);
+    } catch (error) {
+      console.error("Error interacting with contract:", error?.message);
+    }
   }
 
   const candidates = [

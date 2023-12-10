@@ -41,240 +41,241 @@ import { goerli, polygonZkEvmTestnet } from "viem/chains";
 
 const zkvote = [
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_verifierAddr",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "_verifierAddr",
+        "type": "address"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "ballotName",
-        type: "string",
+        "internalType": "string",
+        "name": "ballotName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "partyName",
-        type: "string",
+        "internalType": "string",
+        "name": "partyName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "candidateName",
-        type: "string",
+        "internalType": "string",
+        "name": "candidateName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "_partyLogo",
-        type: "string",
-      },
+        "internalType": "string",
+        "name": "_partyLogo",
+        "type": "string"
+      }
     ],
-    name: "addParty",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "addParty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "anonAadhaarVerifierAddr",
-    outputs: [
+    "inputs": [],
+    "name": "anonAadhaarVerifierAddr",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "ballot",
-    outputs: [
+    "inputs": [],
+    "name": "ballot",
+    "outputs": [
       {
-        internalType: "string",
-        name: "ballotImage",
-        type: "string",
+        "internalType": "string",
+        "name": "ballotImage",
+        "type": "string"
       },
       {
-        internalType: "uint256",
-        name: "startTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "endTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
       },
       {
-        internalType: "bool",
-        name: "entryRestriction",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "entryRestriction",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    name: "ballots",
-    outputs: [
+    "name": "ballots",
+    "outputs": [
       {
-        internalType: "string",
-        name: "ballotImage",
-        type: "string",
+        "internalType": "string",
+        "name": "ballotImage",
+        "type": "string"
       },
       {
-        internalType: "uint256",
-        name: "startTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "endTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
       },
       {
-        internalType: "bool",
-        name: "entryRestriction",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "entryRestriction",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "_ballotName",
-        type: "string",
+        "internalType": "string",
+        "name": "_ballotName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "_ballotImage",
-        type: "string",
+        "internalType": "string",
+        "name": "_ballotImage",
+        "type": "string"
       },
       {
-        internalType: "uint256",
-        name: "_startTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "_endTime",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "_endTime",
+        "type": "uint256"
       },
       {
-        internalType: "bool",
-        name: "_entryRestriction",
-        type: "bool",
+        "internalType": "bool",
+        "name": "_entryRestriction",
+        "type": "bool"
       },
       {
-        internalType: "string",
-        name: "_candidateName",
-        type: "string",
+        "internalType": "string",
+        "name": "_candidateName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "_partyLogo",
-        type: "string",
+        "internalType": "string",
+        "name": "_partyLogo",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "_partyName",
-        type: "string",
-      },
+        "internalType": "string",
+        "name": "_partyName",
+        "type": "string"
+      }
     ],
-    name: "createBallot",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "createBallot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256[2]",
-        name: "_pA",
-        type: "uint256[2]",
+        "internalType": "uint256[2]",
+        "name": "_pA",
+        "type": "uint256[2]"
       },
       {
-        internalType: "uint256[2][2]",
-        name: "_pB",
-        type: "uint256[2][2]",
+        "internalType": "uint256[2][2]",
+        "name": "_pB",
+        "type": "uint256[2][2]"
       },
       {
-        internalType: "uint256[2]",
-        name: "_pC",
-        type: "uint256[2]",
+        "internalType": "uint256[2]",
+        "name": "_pC",
+        "type": "uint256[2]"
       },
       {
-        internalType: "uint256[34]",
-        name: "_pubSignals",
-        type: "uint256[34]",
-      },
+        "internalType": "uint256[34]",
+        "name": "_pubSignals",
+        "type": "uint256[34]"
+      }
     ],
-    name: "verify",
-    outputs: [
+    "name": "verify",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "_ballotName",
-        type: "string",
+        "internalType": "string",
+        "name": "_ballotName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "_partyName",
-        type: "string",
+        "internalType": "string",
+        "name": "_partyName",
+        "type": "string"
       },
       {
-        internalType: "uint256[2]",
-        name: "_pA",
-        type: "uint256[2]",
+        "internalType": "uint256[2]",
+        "name": "_pA",
+        "type": "uint256[2]"
       },
       {
-        internalType: "uint256[2][2]",
-        name: "_pB",
-        type: "uint256[2][2]",
+        "internalType": "uint256[2][2]",
+        "name": "_pB",
+        "type": "uint256[2][2]"
       },
       {
-        internalType: "uint256[2]",
-        name: "_pC",
-        type: "uint256[2]",
+        "internalType": "uint256[2]",
+        "name": "_pC",
+        "type": "uint256[2]"
       },
       {
-        internalType: "uint256[34]",
-        name: "_pubSignals",
-        type: "uint256[34]",
-      },
+        "internalType": "uint256[34]",
+        "name": "_pubSignals",
+        "type": "uint256[34]"
+      }
     ],
-    name: "voteForParty",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
+    "name": "voteForParty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
+
 
 const ImageUpload = ({
   control,
@@ -293,6 +294,8 @@ const ImageUpload = ({
         // This function is triggered when the image is selected or removed
         const handleImageChange = (e: any) => {
           const file = e.target.files[0];
+          console.log("https://bafybeibjlpr6wlfc5uuydsnqmfko5z6ufkj3ewckxadf3p5cjg4cqgjcre.ipfs.nftstorage.link/")
+
           if (file && file.type.startsWith("image/")) {
             // Use react-hook-form's onChange to update the form state
             onChange(file);
@@ -386,7 +389,7 @@ export function ProfileForm() {
     const contractAddress = "0x3ef01CBC562daB2bc50916651517f4DC156f8c7A";
     const privateKey =
       "32ba4b61b6faf511b67dadb108513cc1e4a68bb73a06f505e479344a5fb9f7e3";
-    const rpcUrl = "https://explorer.public.zkevm-test.net/";
+    const rpcUrl = "https://rpc.public.zkevm-test.net";
 
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 
@@ -400,14 +403,14 @@ export function ProfileForm() {
       // Replace with your contract method and parameters
       console.log(values);
       const result = await connectedContract.createBallot(
-        "key",
+        "test112",
         "SDf",
-        1,
-        1,
-        false,
+        0,
+        5,
+        true,
         "nam,e",
         "logo",
-        "name"
+        "test112"
       );
       console.log("Contract interaction result:", result);
     } catch (error) {
@@ -429,6 +432,8 @@ export function ProfileForm() {
 
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
+    console.log("https://bafybeibjlpr6wlfc5uuydsnqmfko5z6ufkj3ewckxadf3p5cjg4cqgjcre.ipfs.nftstorage.link/")
+
     if (file && file.type.startsWith("image/")) {
       setImage(file);
       setPreview(URL.createObjectURL(file));
