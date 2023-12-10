@@ -12,12 +12,12 @@ export const data = [
     link: "/",
   },
   {
-    title: "Create a Poll",
+    title: "Create a Ballot",
     icon: <StatusIcon />,
     link: "/admin/create-poll",
   },
   {
-    title: "Archives",
+    title: "Ballot List",
     icon: <ArchiveIcon />,
     link: "/admin/list-poll",
   },

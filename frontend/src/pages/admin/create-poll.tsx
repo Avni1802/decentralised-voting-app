@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 import { Content } from "../../components/Content";
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, useFieldArray, Controller } from "react-hook-form"
-import { Button } from "@/components/ui/button"
+import * as z from "zod";
+import { ethers } from "ethers";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,30 +15,276 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { toast } from "@/components/ui/use-toast"
-import { addDays, format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
+} from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
+import { addDays, format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { useEffect, useState } from 'react';
+} from "@/components/ui/popover";
+import { useEffect, useState } from "react";
+import { goerli, polygonZkEvmTestnet } from "viem/chains";
 
-const ImageUpload = ({ control, name }: { control: any, name: string }) => {
+const zkvote = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_verifierAddr",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "ballotName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "partyName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "candidateName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_partyLogo",
+        type: "string",
+      },
+    ],
+    name: "addParty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "anonAadhaarVerifierAddr",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ballot",
+    outputs: [
+      {
+        internalType: "string",
+        name: "ballotImage",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "startTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "entryRestriction",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "ballots",
+    outputs: [
+      {
+        internalType: "string",
+        name: "ballotImage",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "startTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "entryRestriction",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_ballotName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_ballotImage",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_startTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "_entryRestriction",
+        type: "bool",
+      },
+      {
+        internalType: "string",
+        name: "_candidateName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_partyLogo",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_partyName",
+        type: "string",
+      },
+    ],
+    name: "createBallot",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[2]",
+        name: "_pA",
+        type: "uint256[2]",
+      },
+      {
+        internalType: "uint256[2][2]",
+        name: "_pB",
+        type: "uint256[2][2]",
+      },
+      {
+        internalType: "uint256[2]",
+        name: "_pC",
+        type: "uint256[2]",
+      },
+      {
+        internalType: "uint256[34]",
+        name: "_pubSignals",
+        type: "uint256[34]",
+      },
+    ],
+    name: "verify",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_ballotName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_partyName",
+        type: "string",
+      },
+      {
+        internalType: "uint256[2]",
+        name: "_pA",
+        type: "uint256[2]",
+      },
+      {
+        internalType: "uint256[2][2]",
+        name: "_pB",
+        type: "uint256[2][2]",
+      },
+      {
+        internalType: "uint256[2]",
+        name: "_pC",
+        type: "uint256[2]",
+      },
+      {
+        internalType: "uint256[34]",
+        name: "_pubSignals",
+        type: "uint256[34]",
+      },
+    ],
+    name: "voteForParty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+const ImageUpload = ({
+  control,
+  name,
+  title = "Upload Image",
+}: {
+  control: any;
+  name: string;
+  title?: string;
+}) => {
   return (
     <Controller
       control={control}
@@ -46,7 +293,7 @@ const ImageUpload = ({ control, name }: { control: any, name: string }) => {
         // This function is triggered when the image is selected or removed
         const handleImageChange = (e: any) => {
           const file = e.target.files[0];
-          if (file && file.type.startsWith('image/')) {
+          if (file && file.type.startsWith("image/")) {
             // Use react-hook-form's onChange to update the form state
             onChange(file);
           } else {
@@ -63,9 +310,8 @@ const ImageUpload = ({ control, name }: { control: any, name: string }) => {
           <div className="flex flex-col items-start p-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <label
               htmlFor="image-upload"
-              className="mb-4 block text-sm font-medium text-gray-700 cursor-pointer dark:text-gray-300"
-            >
-              Upload image
+              className="mb-4 block text-sm font-medium text-gray-700 cursor-pointer dark:text-gray-300">
+              {title}
               <Input
                 id="image-upload"
                 type="file"
@@ -84,8 +330,7 @@ const ImageUpload = ({ control, name }: { control: any, name: string }) => {
                 />
                 <Button
                   onClick={removeImage}
-                  className="absolute top-0 right-0 bg-red-500 hover:bg-red-700 text-white w-[15px] h-[15px] rounded-full"
-                >
+                  className="absolute top-0 right-0 bg-red-500 hover:bg-red-700 text-white w-[15px] h-[15px] rounded-full">
                   &times;
                 </Button>
               </div>
@@ -105,10 +350,10 @@ const candidateSchema = z.object({
 
 const formSchema = z.object({
   ballotName: z.string().min(2).max(50),
-  votingType: z
-    .string({
-      required_error: "Please select an votingType to display.",
-    }),
+  ballotImage: z.string().optional(),
+  votingType: z.string({
+    required_error: "Please select an votingType to display.",
+  }),
   startTime: z.date({
     required_error: "A date of birth is required.",
   }),
@@ -116,7 +361,7 @@ const formSchema = z.object({
     required_error: "A date of birth is required.",
   }),
   candidates: z.array(candidateSchema).optional(),
-})
+});
 
 export function ProfileForm() {
   // 1. Define your form.
@@ -125,18 +370,50 @@ export function ProfileForm() {
     defaultValues: {
       ballotName: "",
     },
-  })
+  });
 
   const { fields, append } = useFieldArray({
     name: "candidates",
     control: form.control,
-  })
-
+  });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    console.log("Herne");
+    const contractABI = zkvote;
+    const contractAddress = "0x3ef01CBC562daB2bc50916651517f4DC156f8c7A";
+    const privateKey =
+      "32ba4b61b6faf511b67dadb108513cc1e4a68bb73a06f505e479344a5fb9f7e3";
+    const rpcUrl = "https://explorer.public.zkevm-test.net/";
+
+    const provider = new ethers.JsonRpcProvider(rpcUrl, polygonZkEvmTestnet);
+
+    const wallet = new ethers.Wallet(privateKey, provider);
+    const connectedContract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      wallet
+    );
+    try {
+      // Replace with your contract method and parameters
+      console.log(values);
+      const result = await connectedContract.createBallot(
+        "key",
+        "SDf",
+        1,
+        1,
+        false,
+        "nam,e",
+        "logo",
+        "name"
+      );
+      console.log("Contract interaction result:", result);
+    } catch (error) {
+      console.error("Error interacting with contract:", error?.message);
+    }
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -144,20 +421,20 @@ export function ProfileForm() {
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
         </pre>
       ),
-    })
-    console.log(values)
+    });
+    console.log(values);
   }
   const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState('');
+  const [preview, setPreview] = useState("");
 
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file && file.type.startsWith("image/")) {
       setImage(file);
       setPreview(URL.createObjectURL(file));
     } else {
       setImage(null);
-      setPreview('');
+      setPreview("");
     }
   };
 
@@ -168,9 +445,9 @@ export function ProfileForm() {
     }
     // Clear the image and preview state
     setImage(null);
-    setPreview('');
+    setPreview("");
     // Reset the value of the input file
-    document.getElementById('image-upload').value = '';
+    document.getElementById("image-upload").value = "";
   };
 
   // Clean up the preview URL when the component unmounts or the image changes
@@ -200,6 +477,7 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
+        <ImageUpload control={form.control} name={`ballotImage`} />
         <FormField
           control={form.control}
           name="votingType"
@@ -216,7 +494,9 @@ export function ProfileForm() {
                   <SelectItem value="Custom">Custom</SelectItem>
                   <SelectItem value="Shareholder">Shareholder</SelectItem>
                   <SelectItem value="Auction">Auction</SelectItem>
-                  <SelectItem value="Register Voters">Register Voters</SelectItem>
+                  <SelectItem value="Register Voters">
+                    Register Voters
+                  </SelectItem>
                   <SelectItem value="Insolvency">Insolvency</SelectItem>
                 </SelectContent>
               </Select>
@@ -243,8 +523,7 @@ export function ProfileForm() {
                         className={cn(
                           "w-auto pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
-                        )}
-                      >
+                        )}>
                         {field.value ? (
                           format(field.value, "PPP")
                         ) : (
@@ -287,8 +566,7 @@ export function ProfileForm() {
                         className={cn(
                           "w-auto pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
-                        )}
-                      >
+                        )}>
                         {field.value ? (
                           format(field.value, "PPP")
                         ) : (
@@ -328,9 +606,7 @@ export function ProfileForm() {
                   name={`candidates.${index}.partyName`}
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>
-                        {index + 1}. Party Name
-                      </FormLabel>
+                      <FormLabel>{index + 1}. Party Name</FormLabel>
                       {/* <FormDescription className={cn(index !== 0 && "sr-only")}>
                         Candidate Name
                       </FormDescription> */}
@@ -347,9 +623,7 @@ export function ProfileForm() {
                   name={`candidates.${index}.candidateName`}
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>
-                        {index + 1}. Candidate Name
-                      </FormLabel>
+                      <FormLabel>{index + 1}. Candidate Name</FormLabel>
                       {/* <FormDescription className={cn(index !== 0 && "sr-only")}>
                         Add links to your website, blog, or social media profiles.
                       </FormDescription> */}
@@ -361,7 +635,9 @@ export function ProfileForm() {
                   )}
                 />
               </div>
-              <ImageUpload control={form.control} key={field.id}
+              <ImageUpload
+                control={form.control}
+                key={field.id}
                 name={`candidates.${index}.image`}
               />
             </>
@@ -371,15 +647,14 @@ export function ProfileForm() {
             variant="outline"
             size="sm"
             className="mt-2"
-            onClick={() => append({ partyName: "", candidateName: "" })}
-          >
+            onClick={() => append({ partyName: "", candidateName: "" })}>
             Add URL
           </Button>
         </div>
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 }
 
 export default function StatusPage() {
