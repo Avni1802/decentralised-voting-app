@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
 
-import "../interfaces/IAnonAadhaarVerifier.sol";
+import "./IAnonAadhaarVerifier.sol";
 
 contract AnonAadhaarVerifier {
     address public verifierAddr;

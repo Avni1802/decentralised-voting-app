@@ -1,41 +1,32 @@
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.0;
 
-import "../interfaces/IAnonAadhaarVerifier.sol";
-
-contract Vote {
-    // Structure to hold proposal information
-    struct Proposal {
-        string description;
-        uint256 voteCount;
+import "./IAnonAadharVerifier.sol";
+contract Ballot {
+    // Ballot structure
+    struct Ballot {
+        string ballotImage;
+        uint256 startTime;
+        uint256 endTime;
+        bool entryRestriction;
+        mapping(string => Party) parties;
     }
-    string public votingQuestion;
-    address public anonAadhaarVerifierAddr;
-
-    event Voted(address indexed _from, uint256 indexed _propositionIndex);
-
-    // List of proposals
-    Proposal[] public proposals;
-
-    // Mapping to track if an address has already voted
-    mapping(address => bool) public hasVoted;
-
-    // This can be replaced by the nullifier
-    // Nullifier can be accessed by calling _pubSignals[0]
-    // mapping(uint256 => bool) public hasVoted;
-
-    // Constructor to initialize proposals
-    constructor(
-        string memory _votingQuestion,
-        string[] memory proposalDescriptions,
+    Ballot public ballot;
+address public anonAadhaarVerifierAddr;
+    // Party structure
+    struct Party {
+        string candidateName;
+        uint256 noOfVotes;
+        string partyLogo;
+    }
+ constructor(
+       
         address _verifierAddr
     ) {
         anonAadhaarVerifierAddr = _verifierAddr;
-        votingQuestion = _votingQuestion;
-        for (uint256 i = 0; i < proposalDescriptions.length; i++) {
-            proposals.push(Proposal(proposalDescriptions[i], 0));
-        }
+       
     }
+    // Mapping to store ballots
+    mapping(string => Ballot) public ballots;
 
     function verify(
         uint256[2] calldata _pA,
@@ -51,54 +42,67 @@ contract Vote {
                 _pubSignals
             );
     }
+    // Function to create a ballot
+    function createBallot(
+        string memory _ballotName,
+        string memory _ballotImage,
+        uint256 _startTime,
+        uint256 _endTime,
+        bool  _entryRestriction, 
+        string memory _candidateName,
+        string memory _partyLogo,
+        string memory _partyName
+    ) public {
+        require(ballots[_ballotName].startTime == 0, "Ballot with this name already exists");
+        require(_startTime < _endTime, "Start time must be before end time");
+        require(_entryRestriction!=false, "Age less than 18");
+        Party memory party = Party({
+candidateName : _candidateName,
+noOfVotes : 0,
+partyLogo: _partyLogo
+        });
 
-    // Function to vote for a proposal
-    function voteForProposal(
-        uint256 proposalIndex,
-        uint256[2] calldata _pA,
+        ballot.parties[_partyName] = party;
+       ballot.ballotImage= _ballotImage;
+        ballot.startTime= _startTime;
+        ballot.endTime = _endTime;
+        ballot.entryRestriction = _entryRestriction;
+
+    }
+
+    // Function to add a party to a ballot
+    function addParty(
+        string memory ballotName,
+        string memory partyName,
+        string memory candidateName,
+        string memory _partyLogo
+    ) public {
+        require(ballots[ballotName].startTime == 0, "Ballot must not be started");
+
+        // Create a new party
+        ballots[ballotName].parties[partyName] = Party({
+            candidateName: candidateName,
+            noOfVotes: 0,
+            partyLogo: _partyLogo
+        });
+    }
+
+    // Function to vote for a party
+    function voteForParty(string memory _ballotName, string memory _partyName,  uint256[2] calldata _pA,
         uint[2][2] calldata _pB,
         uint[2] calldata _pC,
-        uint[34] calldata _pubSignals
-    ) public {
-        require(proposalIndex < proposals.length, "Invalid proposal index");
-        require(!hasVoted[msg.sender], "You have already voted");
-        require(
+        uint[34] calldata _pubSignals) public {
+        require(block.timestamp >= ballots[_ballotName].startTime && block.timestamp <= ballots[_ballotName].endTime, "Ballot is not open for voting");
+ require(
             verify(_pA, _pB, _pC, _pubSignals),
             "Your idendity proof is not valid"
         );
 
-        proposals[proposalIndex].voteCount++;
-        hasVoted[msg.sender] = true;
+        // Check if party exists
+        require(keccak256(abi.encodePacked(ballots[_ballotName].parties[_partyName].candidateName )) != keccak256(abi.encodePacked("")), "Party does not exist");
 
-        emit Voted(msg.sender, proposalIndex);
+        ballots[_ballotName].parties[_partyName].noOfVotes++;
     }
 
-    // Function to get the total number of proposals
-    function getProposalCount() public view returns (uint256) {
-        return proposals.length;
-    }
-
-    // Function to get proposal information by index
-    function getProposal(
-        uint256 proposalIndex
-    ) public view returns (string memory, uint256) {
-        require(proposalIndex < proposals.length, "Invalid proposal index");
-
-        Proposal memory proposal = proposals[proposalIndex];
-        return (proposal.description, proposal.voteCount);
-    }
-
-    // Function to get the total number of votes across all proposals
-    function getTotalVotes() public view returns (uint256) {
-        uint256 totalVotes = 0;
-        for (uint256 i = 0; i < proposals.length; i++) {
-            totalVotes += proposals[i].voteCount;
-        }
-        return totalVotes;
-    }
-
-    // Function to check if a user has already voted
-    function checkVoted(address _addr) public view returns (bool) {
-        return hasVoted[_addr];
-    }
+      
 }
